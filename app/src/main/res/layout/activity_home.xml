@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeActivity"
+    android:background="@drawable/homeback">
+
+    <ImageView
+        android:id="@+id/top_instruct"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:background="@drawable/top_instruct"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="@string/instruction"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp" />
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~PERDATA~~~~~~~~~~~~~~~~~~~~~~-->
+    <RelativeLayout
+        android:id="@+id/datatext"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        tools:ignore="MissingConstraints"
+        android:layout_below="@id/top_instruct"
+        android:background="@drawable/button">
+
+        <TextView
+            android:id="@+id/pData"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Personal Data"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            />
+
+        <ImageView
+            android:id="@+id/dropdown"
+            android:src="@drawable/ic_dropdown"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true" />
+
+        <ImageView
+            android:id="@+id/dropup"
+            android:src="@drawable/ic_dropup"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~UNUSED~~~~~~~~~~~~~~~~~~~~~~~-->
+    <TextView
+        android:id="@+id/unusedtext"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/datatext"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="Unused Apps"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
+
+    <!--~~~~~~~~~~~~~~~~~~~~~BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~-->
+    <TextView
+        android:id="@+id/blacktext"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/unusedtext"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="Blacklisted Apps"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
+
+    <!--~~~~~~~~~~~~~~~~~~~~BACKGROUND~~~~~~~~~~~~~~~~~~~~~~~-->
+    <TextView
+        android:id="@+id/backgroundtext"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/blacktext"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="Background Running Apps"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
+
+    <!--~~~~~~~~~~~~~~~~~~~~CATEGORY~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <TextView
+        android:id="@+id/categorytext"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/backgroundtext"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="Category"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
+
+    <!--~~~~~~~~~~~~~~~~~~~~ADS~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <TextView
+        android:id="@+id/adstext"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/categorytext"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/button"
+        android:gravity="center"
+        android:text="Contains Ads"
+        android:textColor="#ffffff"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/datainstruct"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/datatext"
+        android:layout_marginRight="40dp"
+        android:layout_marginLeft="40dp"
+        android:padding="10dp"
+        android:text="@string/pdataInstruct"
+        android:textColor="#000000"
+        android:background="#ffffff"
+        android:textSize="17dp"
+        android:visibility="gone"/>
+
+
+</RelativeLayout>
