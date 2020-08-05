@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.apppermission.R;
+import com.example.apppermission.categorybutton.database.App;
+import com.example.apppermission.categorybutton.database.DatabaseHelper;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -35,6 +37,8 @@ public class CategoryActivity extends AppCompatActivity {
     Spinner categoryMenu;
     String categoryString;
     ProgressDialog progressDialog;
+    private DatabaseHelper db;
+    private CategoryAdapter categoryAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +57,11 @@ public class CategoryActivity extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setHasFixedSize(true);
 
+
         categoryMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                categoryString = categoryMenu.getSelectedItem().toString().toUpperCase();
-                new FetchCategoryTask().execute();
+                    categoryString = categoryMenu.getSelectedItem().toString().toUpperCase();
+                    new FetchCategoryTask().execute();
             }
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -242,7 +247,7 @@ public class CategoryActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             //super.onPostExecute(aVoid);
-            CategoryAdapter categoryAdapter = new CategoryAdapter(CategoryActivity.this, categoryModelList);
+            categoryAdapter = new CategoryAdapter(CategoryActivity.this, categoryModelList);
             mRecyclerView.setAdapter(categoryAdapter);
             //if(progressDialog.isShowing())
             //progressDialog.dismiss();

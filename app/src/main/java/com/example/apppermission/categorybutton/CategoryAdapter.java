@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apppermission.R;
+import com.example.apppermission.categorybutton.database.App;
 
 import java.util.List;
 
