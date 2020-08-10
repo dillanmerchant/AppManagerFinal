@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.app.Activity;
@@ -13,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Spinner;
 
+import com.example.apppermission.adsbutton.AdsActivity;
 import com.example.apppermission.blacklistbutton.BlacklistActivity;
 import com.example.apppermission.categorybutton.CategoryActivity;
 import com.example.apppermission.databutton.DataActivity;
@@ -22,19 +22,6 @@ public class HomeActivity extends AppCompatActivity {
 
     private static final String APP_DETAILS_PACKAGE_NAME = "com.android.settings";
     private static final String SCREEN_CLASS_NAME = "com.android.settings.RunningServices";
-
-    private RelativeLayout personalData;
-    private TextView pDataText;
-    private ImageView dropDownData;
-    private ImageView dropUpData;
-    private TextView dropDownDataInstruct;
-
-    private TextView unusedApps;
-    private TextView blacklistApps;
-    private TextView categoryApps;
-    private TextView backgroundRunning;
-    private TextView adsApps;
-
 
     private Context mContext;
     private Activity mActivity;
@@ -49,24 +36,12 @@ public class HomeActivity extends AppCompatActivity {
 
         Typeface customFont = Typeface.createFromAsset(getAssets(), "fonts/applegothic.ttf");
 
-        personalData = findViewById(R.id.datatext);
-        pDataText = findViewById(R.id.pData);
-        dropDownData = findViewById(R.id.dropdown);
-        pDataText.setTypeface(customFont);
-        dropDownDataInstruct = findViewById(R.id.datainstruct);
-        dropUpData = findViewById(R.id.dropup);
-
-        backgroundRunning = findViewById(R.id.backgroundtext);
-        unusedApps = findViewById(R.id.unusedtext);
-        blacklistApps = findViewById(R.id.blacktext);
-        categoryApps = findViewById(R.id.categorytext);
-        adsApps = findViewById(R.id.adstext);
-
-        backgroundRunning.setTypeface(customFont);
-        unusedApps.setTypeface(customFont);
-        blacklistApps.setTypeface(customFont);
-        categoryApps.setTypeface(customFont);
-        adsApps.setTypeface(customFont);
+        RelativeLayout personalData = (RelativeLayout) findViewById(R.id.personalDataButton);
+        RelativeLayout backgroundRunning = (RelativeLayout) findViewById(R.id.backgroundButton);
+        RelativeLayout unusedApps = (RelativeLayout) findViewById(R.id.unusedButton);
+        RelativeLayout blacklistApps = (RelativeLayout) findViewById(R.id.blacklistButton);
+        RelativeLayout categoryApps = (RelativeLayout) findViewById(R.id.categoryButton);
+        RelativeLayout adsApps = (RelativeLayout) findViewById(R.id.containAdsButton);
 
         personalData.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,28 +92,6 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-
-
-        //=======================================================================
-        dropDownData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dropDownDataInstruct.setVisibility(View.VISIBLE);
-                dropDownData.setVisibility(View.GONE);
-                dropUpData.setVisibility(View.VISIBLE);
-            }
-        });
-
-        dropUpData.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                dropDownDataInstruct.setVisibility(View.GONE);
-                dropDownData.setVisibility(View.VISIBLE);
-                dropUpData.setVisibility(View.GONE);
-            }
-        });
-
 
     }
 }

@@ -28,16 +28,25 @@ public class RemoveFraudApplicationsAdapter extends RecyclerView.Adapter<RemoveF
         this.list = list;
     }
 
+    class FraudViewHolder extends RecyclerView.ViewHolder {
+        public TextView fraudapp_name, fraudapp_size;
+        public ImageView fraudapp_icon,fraudapps_delete;
+
+        public FraudViewHolder(View itemView) {
+            super(itemView);
+            fraudapp_name = itemView.findViewById(R.id.fraudapp_name);
+            fraudapp_icon = itemView.findViewById(R.id.fraudapp_icon);
+            fraudapp_size = itemView.findViewById(R.id.fraudapp_size);
+            fraudapps_delete = itemView.findViewById(R.id.fraudapps_delete);
+        }
+    }
+
     @Override
     public FraudViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_item_blacklist, parent, false);
+                .inflate(R.layout.list_item, parent, false);
 
         return new FraudViewHolder(itemView);
-    }
-    public void updateAdapter(ArrayList<Response> listdata) {
-        this.list = listdata;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -67,22 +76,12 @@ public class RemoveFraudApplicationsAdapter extends RecyclerView.Adapter<RemoveF
 
     @Override
     public int getItemCount() {
-//        list.clear();
         return list.size();
-
-
     }
 
-    class FraudViewHolder extends RecyclerView.ViewHolder {
-        public TextView fraudapp_name, fraudapp_size;
-        public ImageView fraudapp_icon,fraudapps_delete;
-
-        public FraudViewHolder(View itemView) {
-            super(itemView);
-            fraudapp_name = itemView.findViewById(R.id.fraudapp_name);
-            fraudapp_icon = itemView.findViewById(R.id.fraudapp_icon);
-            fraudapp_size = itemView.findViewById(R.id.fraudapp_size);
-            fraudapps_delete = itemView.findViewById(R.id.fraudapps_delete);
-        }
+    public void updateAdapter(ArrayList<Response> listdata) {
+        this.list = listdata;
+        notifyDataSetChanged();
     }
+
 }

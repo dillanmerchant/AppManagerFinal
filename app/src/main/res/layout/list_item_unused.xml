@@ -3,57 +3,72 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginLeft="15dp"
-    android:layout_marginRight="15dp"
-    android:layout_marginTop="15dp"
+    android:layout_marginLeft="@dimen/_10sdp"
+    android:layout_marginRight="@dimen/_10sdp"
+    android:layout_marginTop="@dimen/_10sdp"
     android:layout_height="wrap_content">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
-        <ImageView
-            android:id="@+id/fraudapp_icon"
-            android:layout_width="32dp"
-            android:padding="5dp"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="5dp"
-            android:layout_height="32dp" />
+        <RelativeLayout
+            android:layout_width="@dimen/_40sdp"
+            android:layout_margin="@dimen/_4sdp"
+            android:id="@+id/lytImageView"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/round">
+            <ImageView
+                android:id="@+id/fraudapp_icon"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_height="@dimen/_30sdp" />
+        </RelativeLayout>
         <TextView
             android:id="@+id/fraudapp_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/fraudapp_icon"
+            android:layout_toRightOf="@+id/lytImageView"
             android:text="Application name"
-
             android:textSize="12dp"
+            android:layout_marginTop="@dimen/_11sdp"
             android:layout_marginLeft="6dp"
+            android:textColor="#282828"
+            />
+        <TextView
+            android:id="@+id/fraudapp_last_used"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/lytImageView"
+            android:text="Date"
+            android:textSize="12dp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginLeft="6dp"
+            android:layout_below="@id/fraudapp_name"
+            android:textColor="#282828"
             />
         <TextView
             android:id="@+id/fraudapp_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fraudapp_name"
-            android:layout_toRightOf="@id/fraudapp_icon"/>
-
-        <TextView
-            android:id="@+id/fraudapp_last_used"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/fraudapp_icon"
-            android:layout_below="@id/fraudapp_name"
-            android:text="date"
-            android:textSize="12dp"
-            android:layout_marginLeft="6dp"
-            />
+            android:layout_toRightOf="@id/lytImageView"
+            android:textColor="#282828"/>
 
         <ImageView
             android:id="@+id/fraudapps_delete"
-            android:src="@drawable/ic_delete"
+            android:src="@drawable/ic_uninstall"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="20dp"
             android:layout_alignParentRight="true" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="65dp"
+            android:background="#4892a2"/>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

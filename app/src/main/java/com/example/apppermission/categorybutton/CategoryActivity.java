@@ -12,14 +12,15 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.example.apppermission.R;
-import com.example.apppermission.categorybutton.database.App;
-import com.example.apppermission.categorybutton.database.DatabaseHelper;
+import com.example.apppermission.categorybutton.database.DbHelper;
+import com.example.apppermission.categorybutton.database.DbModel;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,12 +34,12 @@ import java.util.List;
 
 public class CategoryActivity extends AppCompatActivity {
     RecyclerView mRecyclerView;
-    List<CategoryModel> categoryModelList;
     Spinner categoryMenu;
     String categoryString;
     ProgressDialog progressDialog;
-    private DatabaseHelper db;
+    private DbHelper mDatabase;
     private CategoryAdapter categoryAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,11 +58,20 @@ public class CategoryActivity extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setHasFixedSize(true);
 
+        mDatabase = new DbHelper(CategoryActivity.this);
 
         categoryMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     categoryString = categoryMenu.getSelectedItem().toString().toUpperCase();
-                    new FetchCategoryTask().execute();
+                    HashMap<String,String> map = getInstalledPackages();
+                    if(mDatabase.getAllApps().size() != map.size()){
+                        mDatabase.deleteAll();
+                        new FetchCategoryTask().execute();
+                    }
+                    else {
+                        populateView();
+                    }
+
             }
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -73,7 +83,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         private final String TAG = FetchCategoryTask.class.getSimpleName();
         private PackageManager pm;
-/*
+        /*
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -82,7 +92,7 @@ public class CategoryActivity extends AppCompatActivity {
             progressDialog.show();
             progressDialog.setCancelable(false);
         }
-*/
+        */
         @Override
         protected Void doInBackground(Void... errors) {
             HashMap<String,String> map = getInstalledPackages();
@@ -90,22 +100,21 @@ public class CategoryActivity extends AppCompatActivity {
             final String[] values = map.values().toArray(new String[map.size()]);
             final String[] keys = map.keySet().toArray(new String[map.size()]);
 
-            categoryModelList = new ArrayList<>();
             for(int i=0;i<values.length;i++) {
-                CategoryModel categoryModel = new CategoryModel();
                 String packageName = keys[i];
-                String appName = values[i];
                 String appCategoryType = parseAndExtractCategory(packageName);
-                categoryModel.category = appCategoryType;
-                categoryModel.packageName = packageName;
-                categoryModel.appName = appName;
+
+                mDatabase.insertData(packageName, appCategoryType);
+
+                /*
                 if(appCategoryType.equals(categoryString)) {
                     categoryModelList.add(categoryModel);
                 }
                 else if (categoryString.equals("ALL")) {
                     categoryModelList.add(categoryModel);
-                }
+                }*/
             }
+            populateView();
 
             return null;
         }
@@ -123,15 +132,6 @@ public class CategoryActivity extends AppCompatActivity {
                     doc = Jsoup.connect(url).timeout(30 * 1000).get();
                     if (doc != null) {
                         //TODO: START_METHOD_1
-                        //Extract category String from a <anchor> tag value directly.
-                        //NOTE: its return sub category text, for apps with multiple sub category.
-                        //Comment this method {METHOD_1}, if you wish to extract category by href value.
-                        //Element CATEGORY_SUB_CATEGORY = doc.select("a[itemprop=genre]").first();
-                        //if (CATEGORY_SUB_CATEGORY != null) {
-                        //    appCategoryType = CATEGORY_SUB_CATEGORY.text();
-                        //}
-                        //TODO: END_METHOD_1
-                        //TODO: START_METHOD_2
                         // Use below code only if you wist to extract category by href value.
                         //Its return parent or Main Category Text for all app.
                         //Comment this method {METHOD_2}, If you wihs to extract category from a<anchor> value.
@@ -146,7 +146,7 @@ public class CategoryActivity extends AppCompatActivity {
                                 }
                             }
                         }
-                        //TODO: END_METHOD_2
+                        //TODO: END_METHOD_1
                         if (appCategoryType != null && appCategoryType.length() > 1) {
                             appCategoryType = replaceSpecialCharacter(appCategoryType);
                         }
@@ -210,40 +210,7 @@ public class CategoryActivity extends AppCompatActivity {
             return appCategoryType;
         }
 
-        protected HashMap<String,String> getInstalledPackages(){
-            PackageManager packageManager = getPackageManager();
-
-            // Initialize a new intent
-            Intent intent = new Intent(Intent.ACTION_MAIN,null);
-            // Set the intent category
-            intent.addCategory(Intent.CATEGORY_LAUNCHER);
-            // Set the intent flags
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-                    |Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-
-            // Initialize a new list of resolve info
-            List<ResolveInfo> resolveInfoList = getPackageManager().queryIntentActivities(intent,0);
-
-            // Initialize a new hash map of package names and application label
-            HashMap<String,String> map = new HashMap<>();
-
-            // Loop through the resolve info list
-            for(ResolveInfo resolveInfo : resolveInfoList){
-                // Get the activity info from resolve info
-                ActivityInfo activityInfo = resolveInfo.activityInfo;
-
-                // Get the package name
-                String packageName = activityInfo.applicationInfo.packageName;
-
-                // Get the application label
-                String label = (String) packageManager.getApplicationLabel(activityInfo.applicationInfo);
-
-                // Put the package name and application label to hash map
-                map.put(packageName,label);
-            }
-            return map;
-        }
-
+        /*
         @Override
         protected void onPostExecute(Void aVoid) {
             //super.onPostExecute(aVoid);
@@ -251,6 +218,42 @@ public class CategoryActivity extends AppCompatActivity {
             mRecyclerView.setAdapter(categoryAdapter);
             //if(progressDialog.isShowing())
             //progressDialog.dismiss();
+        }*/
+    }
+
+    public void populateView() {
+        List<DbModel> data = mDatabase.getAllApps();
+        List<DbModel> display = new ArrayList<DbModel>();
+        for(int i = 0; i < data.size(); i++) {
+            if(data.get(i).getCategory().equals(categoryString)){
+                display.add(data.get(i));
+            }
+            else if(categoryString.equals("ALL")){
+                display = data;
+            }
         }
+        categoryAdapter = new CategoryAdapter(CategoryActivity.this, display);
+        mRecyclerView.setAdapter(categoryAdapter);
+    }
+
+
+    public HashMap<String,String> getInstalledPackages(){
+        PackageManager packageManager = getPackageManager();
+
+        Intent intent = new Intent(Intent.ACTION_MAIN,null);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                |Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+
+        List<ResolveInfo> resolveInfoList = getPackageManager().queryIntentActivities(intent,0);
+        HashMap<String,String> map = new HashMap<>();
+
+        for(ResolveInfo resolveInfo : resolveInfoList){
+            ActivityInfo activityInfo = resolveInfo.activityInfo;
+            String packageName = activityInfo.applicationInfo.packageName;
+            String label = (String) packageManager.getApplicationLabel(activityInfo.applicationInfo);
+            map.put(packageName,label);
+        }
+        return map;
     }
 }

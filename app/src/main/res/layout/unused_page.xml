@@ -1,36 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:gravity="center_vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="@dimen/margin_medium"
-              >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".unusedbutton.UnusedActivity">
+<ImageView
+    android:layout_width="match_parent"
+    android:id="@+id/bgImageView"
+    android:background="@drawable/header_unused_apps"
+    android:layout_height="@dimen/_200sdp"/>
 
-    <Button android:id="@+id/button_open_usage_setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/open_app_usage_setting"
-            android:visibility="gone"
-            />
+<RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_alignParentTop="true"
+    android:layout_marginTop="@dimen/_10sdp">
 
-    <LinearLayout android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:orientation="horizontal"
-            >
-        <TextView android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="@string/time_span"
-                />
+    <ImageView
+        android:layout_width="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:src="@drawable/ic_back_arrow"
+        android:layout_height="@dimen/_20sdp" />
+    <TextView
+        android:id="@+id/description_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#fff"
+        android:gravity="center"
+        android:text="Unused Apps"
+        android:textSize="@dimen/_18sdp"/>
 
-        <Spinner android:id="@+id/spinner_time_span"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"/>
-    </LinearLayout>
+</RelativeLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_medium"
+        android:layout_below="@id/bgImageView"
+        >
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_marginLeft="@dimen/margin_small"
             android:layout_marginRight="@dimen/margin_small"
@@ -41,4 +56,7 @@
             app:layoutManager="LinearLayoutManager"
             />
 
-</LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
+

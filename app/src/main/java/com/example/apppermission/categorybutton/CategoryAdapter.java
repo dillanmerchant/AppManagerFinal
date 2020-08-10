@@ -16,7 +16,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.apppermission.R;
-import com.example.apppermission.categorybutton.database.App;
+import com.example.apppermission.categorybutton.database.DbModel;
 
 import java.util.List;
 
@@ -24,13 +24,14 @@ import java.util.List;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder> {
 
     Context ctx;
-    List<CategoryModel> list;
+    List<DbModel> list;
     PackageManager packageManager;
     ProgressDialog progressDialog;
 
-    public CategoryAdapter(Context ctx, List<CategoryModel> list) {
+    public CategoryAdapter(Context ctx, List<DbModel> list) {
         this.ctx = ctx;
         this.list = list;
+        packageManager=ctx.getPackageManager();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         return new CategoryViewHolder(itemView);
     }
 
-    public void updateAdapter(List<CategoryModel> listdata) {
+    public void updateAdapter(List<DbModel> listdata) {
         this.list = listdata;
         notifyDataSetChanged();
     }
@@ -50,13 +51,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
     public void onBindViewHolder(final CategoryViewHolder holder, final int position) {
 
         try {
-            String appName = list.get(position).appName;
-            //String appName = (String) packageManager.getApplicationLabel(packageManager.getApplicationInfo(list.get(position).packageName,
-                    //PackageManager.GET_META_DATA));
+            String appName = (String) packageManager.getApplicationLabel(packageManager.
+                    getApplicationInfo(list.get(position).getPackageName(),
+                    PackageManager.GET_META_DATA));
             holder.fraudapp_name.setText(appName);
-            Drawable icon = ctx.getPackageManager().getApplicationIcon(list.get(position).packageName);
+            Drawable icon = ctx.getPackageManager().getApplicationIcon(list.get(position).getPackageName());
             holder.fraudapp_icon.setImageDrawable(icon);
-            String category = list.get(position).category;
+            String category = list.get(position).getCategory();
             holder.fraudapp_category.setText(category);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -68,7 +69,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
         holder.fraudapps_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String response_new = list.get(position).packageName;
+                String response_new = list.get(position).getPackageName();
                 Intent intent = new Intent(Intent.ACTION_DELETE);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.setData(Uri.parse("package:" + list.get(position)));

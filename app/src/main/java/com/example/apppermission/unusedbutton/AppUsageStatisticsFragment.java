@@ -16,6 +16,7 @@
 
 package com.example.apppermission.unusedbutton;
 
+import android.app.Dialog;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
@@ -31,6 +32,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -93,6 +95,7 @@ public class AppUsageStatisticsFragment extends Fragment {
         return inflater.inflate(R.layout.unused_page, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onViewCreated(View rootView, Bundle savedInstanceState) {
         super.onViewCreated(rootView, savedInstanceState);
@@ -103,8 +106,8 @@ public class AppUsageStatisticsFragment extends Fragment {
         mRecyclerView.scrollToPosition(0);
 
         //Button for Access Settings
-        mOpenUsageSettingButton = (Button) rootView.findViewById(R.id.button_open_usage_setting);
-
+        //mOpenUsageSettingButton = (Button) rootView.findViewById(R.id.button_open_usage_setting);
+/*
         //Spinner Implementation
         mSpinner = (Spinner) rootView.findViewById(R.id.spinner_time_span);
         SpinnerAdapter spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
@@ -120,17 +123,17 @@ public class AppUsageStatisticsFragment extends Fragment {
                 StatsUsageInterval statsUsageInterval = StatsUsageInterval
                         .getValue(strings[position]);
                 if (statsUsageInterval != null) {
-                    List<UsageStats> usageStatsList =
-                            getUsageStatistics(statsUsageInterval.mInterval);
+ */
+                    List<UsageStats> usageStatsList = getUsageStatistics(UsageStatsManager.INTERVAL_DAILY);
                     Collections.sort(usageStatsList, new LastTimeLaunchedComparatorDesc());
                     updateAppsList(usageStatsList);
-                }
-            }
-
+                //}
+            //}
+/*
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
             }
-        });
+        });*/
     }
 
     /**
@@ -155,7 +158,8 @@ public class AppUsageStatisticsFragment extends Fragment {
                         System.currentTimeMillis());
 
         if (queryUsageStats.size() == 0) {
-            Log.i(TAG, "The user may not allow the access to apps usage. ");
+            showAlertDialog();
+           /* Log.i(TAG, "The user may not allow the access to apps usage. ");
             Toast.makeText(getActivity(),
                     getString(R.string.explanation_access_to_appusage_is_not_enabled),
                     Toast.LENGTH_LONG).show();
@@ -163,9 +167,9 @@ public class AppUsageStatisticsFragment extends Fragment {
             mOpenUsageSettingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+
                 }
-            });
+            });*/
         }
         return queryUsageStats;
     }
@@ -189,8 +193,10 @@ public class AppUsageStatisticsFragment extends Fragment {
             customUsageStats.usageStats = usageStatsList.get(i);
             customUsageStats.packageName = usageStatsList.get(i).getPackageName();
             for(int j = i + 1; j < usageStatsList.size(); j++) {
-                if (usageStatsList.get(i).getPackageName().equals(usageStatsList.get(j).getPackageName())) {
+                String getter = usageStatsList.get(j).getPackageName();
+                if (usageStatsList.get(i).getPackageName().equals(getter)) {
                     usageStatsList.remove(j);
+                    j--;
                 }
             }
             try {
@@ -256,6 +262,39 @@ public class AppUsageStatisticsFragment extends Fragment {
                 }
             }
             return null;
+        }
+    }
+
+    private void showAlertDialog() {
+        try {
+            final Dialog dialog = new Dialog(getContext());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.popup);
+            dialog.setCancelable(true);
+            dialog.show();
+            Button yesBtn = (Button) dialog.findViewById(R.id.okBtn);
+            Button noBtn = (Button) dialog.findViewById(R.id.cancelBtn);
+            yesBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS));
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+            noBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //no button functionality
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

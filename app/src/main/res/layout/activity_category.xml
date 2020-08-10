@@ -4,20 +4,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <Spinner
-        android:id="@+id/category_menu"
+    tools:context=".databutton.DataActivity">
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"/>
+        android:id="@+id/bgImageView"
+        android:background="@drawable/header_category"
+        android:layout_height="@dimen/_200sdp"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="100dp"/>
+    <RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/_10sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:src="@drawable/ic_back_arrow"
+            android:layout_height="@dimen/_20sdp"
+            android:layout_marginStart="@dimen/_10sdp" />
+        <TextView
+            android:id="@+id/description_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:text="Category"
+            android:textSize="@dimen/_18sdp"/>
+    </RelativeLayout>
+        <TextView
+            android:id="@+id/spinnerInstruct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category:"
+            android:layout_alignBottom="@+id/bgImageView"
+            android:layout_marginLeft="@dimen/_18sdp"
+            android:textSize="@dimen/_13sdp"/>
+        <Spinner
+            android:id="@+id/category_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/spinner"
+            android:layout_alignBottom="@+id/bgImageView"
+            android:layout_toRightOf="@id/spinnerInstruct"
+            android:layout_marginLeft="@dimen/_5sdp"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_below="@+id/bgImageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 </RelativeLayout>

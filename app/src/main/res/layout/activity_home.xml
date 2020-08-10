@@ -4,168 +4,354 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeActivity"
-    android:background="@drawable/homeback">
-
-    <ImageView
-        android:id="@+id/top_instruct"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        android:background="@drawable/top_instruct"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="110dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center"
-        android:text="@string/instruction"
-        android:textColor="#FFFFFF"
-        android:textSize="30sp" />
-
-    <!--~~~~~~~~~~~~~~~~~~~~~~PERDATA~~~~~~~~~~~~~~~~~~~~~~-->
+    tools:context=".HomeActivity">
     <RelativeLayout
-        android:id="@+id/datatext"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        tools:ignore="MissingConstraints"
-        android:layout_below="@id/top_instruct"
-        android:background="@drawable/button">
+        android:id="@+id/home_screen_top"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_200sdp">
+        <ImageView
+            android:layout_width="match_parent"
+            android:id="@+id/bgImageView"
+            android:background="@drawable/header_home_screen"
+            android:layout_height="@dimen/_200sdp"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:id="@+id/toplogo"
+            android:background="@drawable/ic_home_header_logo"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/_2sdp"/>
 
         <TextView
-            android:id="@+id/pData"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Personal Data"
-            android:layout_centerVertical="true"
+            android:layout_alignParentBottom="true"
             android:gravity="center"
-            android:textColor="#ffffff"
-            android:textSize="20dp"
-            />
-
-        <ImageView
-            android:id="@+id/dropdown"
-            android:src="@drawable/ic_dropdown"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true" />
-
-        <ImageView
-            android:id="@+id/dropup"
-            android:src="@drawable/ic_dropup"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:layout_alignParentRight="true"
-            android:visibility="gone"/>
+            android:layout_marginLeft="@dimen/_50sdp"
+            android:layout_marginRight="@dimen/_50sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_25sdp"
+            android:text="@string/instruction"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/_15sdp" />
     </RelativeLayout>
 
-
-    <!--~~~~~~~~~~~~~~~~~~~~~~~UNUSED~~~~~~~~~~~~~~~~~~~~~~~-->
-    <TextView
-        android:id="@+id/unusedtext"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/datatext"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button"
-        android:gravity="center"
-        android:text="Unused Apps"
-        android:textColor="#ffffff"
-        android:textSize="20dp" />
-
-    <!--~~~~~~~~~~~~~~~~~~~~~BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~-->
-    <TextView
-        android:id="@+id/blacktext"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/unusedtext"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button"
-        android:gravity="center"
-        android:text="Blacklisted Apps"
-        android:textColor="#ffffff"
-        android:textSize="20dp" />
-
-    <!--~~~~~~~~~~~~~~~~~~~~BACKGROUND~~~~~~~~~~~~~~~~~~~~~~~-->
-    <TextView
-        android:id="@+id/backgroundtext"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/blacktext"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button"
-        android:gravity="center"
-        android:text="Background Running Apps"
-        android:textColor="#ffffff"
-        android:textSize="20dp" />
-
-    <!--~~~~~~~~~~~~~~~~~~~~CATEGORY~~~~~~~~~~~~~~~~~~~~~~~-->
-
-    <TextView
-        android:id="@+id/categorytext"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/backgroundtext"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button"
-        android:gravity="center"
-        android:text="Category"
-        android:textColor="#ffffff"
-        android:textSize="20dp" />
-
-    <!--~~~~~~~~~~~~~~~~~~~~ADS~~~~~~~~~~~~~~~~~~~~~~~-->
-
-    <TextView
-        android:id="@+id/adstext"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@id/categorytext"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/button"
-        android:gravity="center"
-        android:text="Contains Ads"
-        android:textColor="#ffffff"
-        android:textSize="20dp" />
-
-    <TextView
-        android:id="@+id/datainstruct"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/row1"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/datatext"
-        android:layout_marginRight="40dp"
-        android:layout_marginLeft="40dp"
-        android:padding="10dp"
-        android:text="@string/pdataInstruct"
-        android:textColor="#000000"
-        android:background="#ffffff"
-        android:textSize="17dp"
-        android:visibility="gone"/>
+        android:layout_below="@id/home_screen_top"
+        android:weightSum="1">
+    <!--~~~~~~~~~~~~~~~~~~~~~PERSONALDATA~~~~~~~~~~~~~~~~~~~~~~~-->
+        <RelativeLayout
+            android:id="@+id/personalDataButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_75sdp"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_2sdp"
+            android:background="@drawable/button">
+            <RelativeLayout
+                android:layout_width="@dimen/_50sdp"
+                android:layout_margin="@dimen/_7sdp"
+                android:id="@+id/lytImageView_data"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@drawable/button_icon"
+                android:layout_centerVertical="true">
+                <ImageView
+                    android:id="@+id/icon_data"
+                    android:src="@drawable/ic_collect_personal_data"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_height="@dimen/_30sdp" />
+            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/lytImageView_data"
+                android:text="Collect Personal Data"
+                android:layout_centerVertical="true"
+                android:textColor="#2bacc6"
+                android:textSize="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                />
+        </RelativeLayout>
 
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~CONTAINSADS~~~~~~~~~~~~~~~~~~~~~~~-->
+        <RelativeLayout
+            android:id="@+id/containAdsButton"
+            android:layout_below="@+id/home_screen_top"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_75sdp"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="@dimen/_2sdp"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:background="@drawable/button">
+            <RelativeLayout
+                android:layout_width="@dimen/_50sdp"
+                android:layout_margin="@dimen/_7sdp"
+                android:id="@+id/lytImageView_ads"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@drawable/button_icon"
+                android:layout_centerVertical="true">
+                <ImageView
+                    android:id="@+id/icon_ads"
+                    android:src="@drawable/ic_contain_ads"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_height="@dimen/_30sdp" />
+            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/lytImageView_ads"
+                android:text="Contains Ads"
+                android:layout_centerVertical="true"
+                android:textColor="#2bacc6"
+                android:textSize="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/row2"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_below="@id/row1"
+        android:weightSum="1">
+    <!--~~~~~~~~~~~~~~~~~~~~~BACKGROUND~~~~~~~~~~~~~~~~~~~~~~~-->
+    <RelativeLayout
+        android:id="@+id/backgroundButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_75sdp"
+        android:layout_weight="0.5"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_2sdp"
+        android:background="@drawable/button">
+        <RelativeLayout
+            android:layout_width="@dimen/_50sdp"
+            android:layout_margin="@dimen/_7sdp"
+            android:id="@+id/lytImageView_background"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/button_icon"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:id="@+id/icon_background"
+                android:src="@drawable/ic_background_running_apps"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_height="@dimen/_30sdp" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/lytImageView_background"
+            android:text="Background Running Apps"
+            android:layout_centerVertical="true"
+            android:textColor="#2bacc6"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_3sdp"
+            android:layout_marginRight="@dimen/_3sdp"
+            />
+    </RelativeLayout>
+
+    <!--~~~~~~~~~~~~~~~~~~~~BATTERY~~~~~~~~~~~~~~~~~~~~~~~-->
+    <RelativeLayout
+        android:id="@+id/batteryUsageButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_75sdp"
+        android:layout_weight="0.5"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_2sdp"
+        android:background="@drawable/button">
+        <RelativeLayout
+            android:layout_width="@dimen/_50sdp"
+            android:layout_margin="@dimen/_7sdp"
+            android:id="@+id/lytImageView_battery"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/button_icon"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:id="@+id/icon_battery"
+                android:src="@drawable/ic_battery_usage"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_height="@dimen/_30sdp" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/lytImageView_battery"
+            android:text="Battery Usage"
+            android:layout_centerVertical="true"
+            android:textColor="#2bacc6"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_3sdp"
+            android:layout_marginRight="@dimen/_3sdp"
+            />
+    </RelativeLayout>
+    </LinearLayout>
+
+
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/row3"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_below="@id/row2"
+        android:weightSum="1">
+
+    <!--~~~~~~~~~~~~~~~~~~~~BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~-->
+    <RelativeLayout
+        android:id="@+id/blacklistButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_75sdp"
+        android:layout_weight="0.5"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_2sdp"
+        android:background="@drawable/button">
+        <RelativeLayout
+            android:layout_width="@dimen/_50sdp"
+            android:layout_margin="@dimen/_7sdp"
+            android:id="@+id/lytImageView_blacklist"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/button_icon"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:id="@+id/icon_blacklist"
+                android:src="@drawable/ic_industry_blacklisted"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_height="@dimen/_30sdp" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/lytImageView_blacklist"
+            android:text="Industry Blacklisted Apps"
+            android:layout_centerVertical="true"
+            android:textColor="#2bacc6"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_3sdp"
+            android:layout_marginRight="@dimen/_3sdp"
+            />
+    </RelativeLayout>
+
+    <!--~~~~~~~~~~~~~~~~~~~UNUSED~~~~~~~~~~~~~~~~~~~~~~~-->
+
+    <RelativeLayout
+        android:id="@+id/unusedButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_75sdp"
+        android:layout_weight="0.5"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_marginLeft="@dimen/_2sdp"
+        android:background="@drawable/button">
+        <RelativeLayout
+            android:layout_width="@dimen/_50sdp"
+            android:layout_margin="@dimen/_7sdp"
+            android:id="@+id/lytImageView_unused"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/button_icon"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:id="@+id/icon_unused"
+                android:src="@drawable/ic_unused_apps"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_height="@dimen/_30sdp" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/lytImageView_unused"
+            android:text="Unused Apps"
+            android:layout_centerVertical="true"
+            android:textColor="#2bacc6"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_3sdp"
+            android:layout_marginRight="@dimen/_3sdp"
+            />
+    </RelativeLayout>
+    </LinearLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/row4"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_below="@id/row3"
+        android:weightSum="1">
+    <!--~~~~~~~~~~~~~~~~~~~CATEGORY~~~~~~~~~~~~~~~~~~~~~~~-->
+    <RelativeLayout
+        android:id="@+id/categoryButton"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/_75sdp"
+        android:layout_weight="0.5"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_4sdp"
+        android:background="@drawable/button">
+        <RelativeLayout
+            android:layout_width="@dimen/_50sdp"
+            android:layout_margin="@dimen/_7sdp"
+            android:id="@+id/lytImageView_category"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/button_icon"
+            android:layout_centerVertical="true">
+            <ImageView
+                android:id="@+id/icon_category"
+                android:src="@drawable/ic_category"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="@dimen/_1sdp"
+                android:layout_marginTop="@dimen/_1sdp"
+                android:layout_height="@dimen/_30sdp" />
+        </RelativeLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/lytImageView_category"
+            android:text="Category"
+            android:layout_centerVertical="true"
+            android:textColor="#2bacc6"
+            android:textSize="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_3sdp"
+            android:layout_marginRight="@dimen/_3sdp"
+            />
+    </RelativeLayout>
+        <TextView
+            android:id="@+id/temp"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_75sdp"
+            android:layout_weight="0.5"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_marginLeft="@dimen/_2sdp"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

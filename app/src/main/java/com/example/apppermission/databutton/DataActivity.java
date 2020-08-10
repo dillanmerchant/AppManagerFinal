@@ -13,11 +13,16 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.example.apppermission.HomeActivity;
 import com.example.apppermission.R;
 
 import java.util.ArrayList;
@@ -31,6 +36,7 @@ public class DataActivity extends AppCompatActivity {
 
     private RecyclerView recyclerview;
     private PersonalDataAdapter adapter;
+    private ImageView info;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -48,7 +54,8 @@ public class DataActivity extends AppCompatActivity {
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setHasFixedSize(true);
 
-        ArrayList<String> listPackageNames = new ArrayList<String>();
+        ArrayList<ListModel> finalList = new ArrayList<ListModel>();
+        ArrayList<String> listPermissions = new ArrayList<>();
 
         HashMap<String,String> map = getInstalledPackages();
 
@@ -59,74 +66,61 @@ public class DataActivity extends AppCompatActivity {
         boolean isPermission;
         for(int i=0;i<values.length;i++){
             String packageName = keys[i];
-            //String label = values[i];
-            isPermission = getPermissionsByPackageName(packageName);
-            if(isPermission){
-                listPackageNames.add(packageName);
+            listPermissions = getPermissionsByPackageName(packageName);
+            if(listPermissions.size() > 0){
+                ListModel app = new ListModel();
+                app.packageName = packageName;
+                app.personalPermissions = listPermissions;
+                finalList.add(app);
             }
         }
 
-        adapter = new PersonalDataAdapter(DataActivity.this, listPackageNames);
+        adapter = new PersonalDataAdapter(DataActivity.this, finalList);
         recyclerview.setAdapter(adapter);
     }
 
     protected HashMap<String,String> getInstalledPackages(){
         PackageManager packageManager = getPackageManager();
 
-        // Initialize a new intent
         Intent intent = new Intent(Intent.ACTION_MAIN,null);
-        // Set the intent category
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        // Set the intent flags
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 |Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
 
-        // Initialize a new list of resolve info
         List<ResolveInfo> resolveInfoList = getPackageManager().queryIntentActivities(intent,0);
-
-        // Initialize a new hash map of package names and application label
         HashMap<String,String> map = new HashMap<>();
 
-        // Loop through the resolve info list
         for(ResolveInfo resolveInfo : resolveInfoList){
-            // Get the activity info from resolve info
             ActivityInfo activityInfo = resolveInfo.activityInfo;
-
-            // Get the package name
             String packageName = activityInfo.applicationInfo.packageName;
-
-            // Get the application label
             String label = (String) packageManager.getApplicationLabel(activityInfo.applicationInfo);
-
-            // Put the package name and application label to hash map
             map.put(packageName,label);
         }
         return map;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    protected boolean getPermissionsByPackageName(String packageName){
-        boolean isPermission = false;
+    protected ArrayList<String> getPermissionsByPackageName(String packageName){
+        ArrayList<String> listPermissions = new ArrayList<>();
+        String addPermission = "";
 
         try {
-            // Get the package info
             PackageInfo packageInfo = getPackageManager().getPackageInfo(packageName, PackageManager.GET_PERMISSIONS);
 
-            // Loop through the package info requested permissions
             List<String> permissions = Arrays.asList(getResources().getStringArray(R.array.app_permissions));
             for (int i = 0; i < packageInfo.requestedPermissions.length; i++) {
                 if ((packageInfo.requestedPermissionsFlags[i] & PackageInfo.REQUESTED_PERMISSION_GRANTED) != 0) {
                     String permission =packageInfo.requestedPermissions[i];
                     // To make permission name shorter
-                    //permission = permission.substring(permission.lastIndexOf(".")+1);
                     if(permissions.contains(permission)) {
-                        isPermission = true;
+                        addPermission = permission.substring(permission.lastIndexOf(".")+1);
+                        listPermissions.add(addPermission);
                     }
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return isPermission;
+        return listPermissions;
     }
 }
