@@ -5,4 +5,12 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="white">#ffffff</color>
     <color name="dark_black">#000000</color>
+    <color name="light_gray">#EFF4FD</color>
+    <color name="icon_back">#5fc5da</color>
+    <color name="button_text">#2bacc6</color>
+    <color name="popup_background_top">#f2f4f3</color>
+    <color name="popup_line">#858685</color>
+    <color name="popup_background_bottom">#fafafa</color>
+    <color name="popup_button_text">#056b80</color>
+    <color name="popup_button">#5fc5da</color>
 </resources>

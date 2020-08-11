@@ -18,6 +18,7 @@
         android:layout_marginTop="@dimen/_10sdp">
 
         <ImageView
+            android:id="@+id/category_backarrow"
             android:layout_width="@dimen/_20sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_2sdp"
@@ -45,7 +46,7 @@
             android:id="@+id/category_menu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/spinner"
+            android:background="@drawable/spinner_category"
             android:layout_alignBottom="@+id/bgImageView"
             android:layout_toRightOf="@id/spinnerInstruct"
             android:layout_marginLeft="@dimen/_5sdp"/>

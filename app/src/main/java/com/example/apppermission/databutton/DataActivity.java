@@ -44,6 +44,15 @@ public class DataActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
 
+        ImageView backArrow = findViewById(R.id.data_backarrow);
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         // Get the application context
         mContext = getApplicationContext();
         mActivity = DataActivity.this;

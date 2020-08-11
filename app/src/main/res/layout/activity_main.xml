@@ -22,7 +22,7 @@
         android:layout_below="@+id/logo"
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/_20sdp"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         android:layout_marginTop="@dimen/_3sdp"/>
     <TextView
         android:id="@+id/version"
@@ -32,7 +32,7 @@
         android:layout_below="@+id/name"
         android:layout_centerHorizontal="true"
         android:textSize="@dimen/_13sdp"
-        android:textColor="#ffffff"
+        android:textColor="@color/white"
         android:layout_marginTop="@dimen/_3sdp"/>
     <RelativeLayout
         android:id="@+id/company"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:text="Powered by"
             android:textSize="@dimen/_8sdp"
-            android:textColor="#ffffff"
+            android:textColor="@color/white"
             android:layout_centerVertical="true"/>
         <ImageView
             android:layout_width="wrap_content"

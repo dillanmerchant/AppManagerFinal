@@ -18,6 +18,7 @@
         android:layout_marginTop="@dimen/_10sdp">
 
         <ImageView
+            android:id="@+id/ads_backarrow"
             android:layout_width="@dimen/_20sdp"
             android:layout_marginLeft="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_2sdp"

@@ -15,11 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".adsbutton.AdsActivity"></activity>
+        <activity android:name=".AboutUsActivity"></activity>
+        <activity android:name=".SettingsActivity" />
+        <activity android:name=".BatteryActivity" />
+        <activity android:name=".adsbutton.AdsActivity" />
         <activity android:name=".categorybutton.CategoryActivity" />
         <activity android:name=".blacklistbutton.BlacklistActivity" />
         <activity android:name=".unusedbutton.UnusedActivity" />
-        <activity android:name=".BackgroundActivity" />
         <activity android:name=".databutton.DataActivity" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".MainActivity">

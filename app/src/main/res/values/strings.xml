@@ -1,14 +1,18 @@
 <resources>
-    <string name="app_name">AppPermission</string>
+    <string name="app_name">AppManager</string>
+    <string name="version">1.0.1.1</string>
     <string name="instruction">How would you like to manage your apps?</string>
     <string name="open_app_usage_setting">Open Apps with usage access settings</string>
     <string name="last_time_used">"Last time used: "</string>
-    <string name="time_span">"Time span: "</string>
     <string name="explanation_access_to_appusage_is_not_enabled">Failed to retrieve app usage
         statistics. You may need to enable access
         for this app through Settings > Security > Apps with usage access
     </string>
-    <string name="pdataInstruct">"Clicking this button will allow you to see which of your installed apps collect any form of personal data from the user, in this case - you!"</string>
+    <string name="usage_access">Please add AppManager to Apps with Usage Access in Settings / Security</string>
+    <string name="background_running">You will be Navigated to Background Running Services in Device Settings</string>
+    <string name="about_us_paragrpah">AppManager app and Logo are the trademarks of SoftClouds LLC All rights reserved</string>
+    <string name="about_us_version">Version: 1.0.1.1 dated August 10, 2020.</string>
+    <string name="battery_usage">You will be Navigated to Battery Usage Details in Device Settings</string>
     <string-array name="category_array">
         <item>All</item>
         <item>Art &amp; Design</item>
@@ -46,5 +50,11 @@
         <item>Video Players &amp; Editors</item>
         <item>Weather</item>
         <item>Others</item>
+    </string-array>
+
+    <string-array name="interval_array">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Monthly</item>
     </string-array>
 </resources>

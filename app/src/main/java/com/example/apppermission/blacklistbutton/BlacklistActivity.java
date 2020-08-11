@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.example.apppermission.R;
 import com.google.gson.JsonArray;
@@ -34,6 +36,15 @@ public class BlacklistActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blacklist);
+
+        ImageView backArrow = findViewById(R.id.blacklist_backarrow);
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         //RecyclerView Setup
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);

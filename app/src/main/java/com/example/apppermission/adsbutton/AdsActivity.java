@@ -12,8 +12,12 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 
+import com.example.apppermission.HomeActivity;
 import com.example.apppermission.R;
+import com.example.apppermission.databutton.DataActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +31,15 @@ public class AdsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ads);
+
+        ImageView backArrow = (ImageView) findViewById(R.id.ads_backarrow);
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
         @Nullable ApplicationInfo appInfo = null;
         recyclerview = findViewById(R.id.recyclerview);

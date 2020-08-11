@@ -33,15 +33,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.apppermission.HomeActivity;
 import com.example.apppermission.R;
 
 import java.util.ArrayList;
@@ -104,6 +102,16 @@ public class AppUsageStatisticsFragment extends Fragment {
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         mLayoutManager = mRecyclerView.getLayoutManager();
         mRecyclerView.scrollToPosition(0);
+
+        ImageView backArrow = rootView.findViewById(R.id.unused_backarrow);
+
+        backArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
         //Button for Access Settings
         //mOpenUsageSettingButton = (Button) rootView.findViewById(R.id.button_open_usage_setting);
@@ -269,7 +277,7 @@ public class AppUsageStatisticsFragment extends Fragment {
         try {
             final Dialog dialog = new Dialog(getContext());
             dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setContentView(R.layout.popup);
+            dialog.setContentView(R.layout.popup_usage_access);
             dialog.setCancelable(true);
             dialog.show();
             Button yesBtn = (Button) dialog.findViewById(R.id.okBtn);
