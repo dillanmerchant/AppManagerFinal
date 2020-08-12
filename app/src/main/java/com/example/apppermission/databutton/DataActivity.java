@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
@@ -18,12 +20,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.example.apppermission.HomeActivity;
 import com.example.apppermission.R;
+import com.example.apppermission.adsbutton.AdsActivity;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +41,8 @@ public class DataActivity extends AppCompatActivity {
 
     private RecyclerView recyclerview;
     private PersonalDataAdapter adapter;
-    private ImageView info;
+    private ImageView info_page;
+    TextView emptyList;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -63,6 +69,17 @@ public class DataActivity extends AppCompatActivity {
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setHasFixedSize(true);
 
+        emptyList = (TextView) findViewById(R.id.noapps);
+
+        info_page = (ImageView) findViewById(R.id.data_info);
+
+        info_page.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showDataAlertDialog();
+            }
+        });
+
         ArrayList<ListModel> finalList = new ArrayList<ListModel>();
         ArrayList<String> listPermissions = new ArrayList<>();
 
@@ -72,20 +89,40 @@ public class DataActivity extends AppCompatActivity {
         final String[] values = map.values().toArray(new String[map.size()]);
         final String[] keys = map.keySet().toArray(new String[map.size()]);
 
-        boolean isPermission;
+        String thisPackage = getPackageName();
         for(int i=0;i<values.length;i++){
             String packageName = keys[i];
-            listPermissions = getPermissionsByPackageName(packageName);
-            if(listPermissions.size() > 0){
-                ListModel app = new ListModel();
-                app.packageName = packageName;
-                app.personalPermissions = listPermissions;
-                finalList.add(app);
+            ApplicationInfo check = null;
+            try {
+                check = getPackageManager().getApplicationInfo(packageName, 0);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+            if (check != null) {
+                if (!isSystemPackage(check)) {
+                    listPermissions = getPermissionsByPackageName(packageName);
+                    if (listPermissions.size() > 0) {
+                        ListModel app = new ListModel();
+                        app.packageName = packageName;
+                        app.personalPermissions = listPermissions;
+                        if (!app.packageName.equalsIgnoreCase(thisPackage)) {
+                            finalList.add(app);
+                        }
+                    }
+                }
             }
         }
 
-        adapter = new PersonalDataAdapter(DataActivity.this, finalList);
-        recyclerview.setAdapter(adapter);
+        if(finalList.size() > 0) {
+            adapter = new PersonalDataAdapter(DataActivity.this, finalList);
+            recyclerview.setAdapter(adapter);
+            recyclerview.setVisibility(View.VISIBLE);
+            emptyList.setVisibility(View.INVISIBLE);
+        }
+        else {
+            emptyList.setVisibility(View.VISIBLE);
+            recyclerview.setVisibility(View.INVISIBLE);
+        }
     }
 
     protected HashMap<String,String> getInstalledPackages(){
@@ -131,5 +168,31 @@ public class DataActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return listPermissions;
+    }
+
+    private void showDataAlertDialog() {
+        try {
+            final Dialog dialog = new Dialog(DataActivity.this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.popup_data_info);
+            dialog.setCancelable(true);
+            dialog.show();
+            Button yesBtn = (Button) dialog.findViewById(R.id.okBtn);
+            yesBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isSystemPackage(ApplicationInfo pkgInfo) {
+        return (pkgInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
     }
 }

@@ -41,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_25sdp"
             android:text="@string/instruction"
+            android:fontFamily="@font/biosans_light"
             android:textColor="@color/white"
             android:textSize="@dimen/_15sdp" />
     </RelativeLayout>
@@ -82,6 +83,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/lytImageView_data"
                 android:text="Collect Personal Data"
+                android:fontFamily="@font/biosans_light"
                 android:layout_centerVertical="true"
                 android:textColor="@color/button_text"
                 android:textSize="@dimen/_10sdp"
@@ -122,6 +124,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/lytImageView_ads"
                 android:text="Contains Ads"
+                android:fontFamily="@font/biosans_light"
                 android:layout_centerVertical="true"
                 android:textColor="@color/button_text"
                 android:textSize="@dimen/_10sdp"
@@ -137,7 +140,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         android:layout_below="@id/row1"
         android:weightSum="1">
     <!--~~~~~~~~~~~~~~~~~~~~~CATEGORY~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -170,6 +173,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/lytImageView_category"
                 android:text="Category"
+                android:fontFamily="@font/biosans_light"
                 android:layout_centerVertical="true"
                 android:textColor="@color/button_text"
                 android:textSize="@dimen/_10sdp"
@@ -208,6 +212,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/lytImageView_unused"
                 android:text="Unused Apps"
+                android:fontFamily="@font/biosans_light"
                 android:layout_centerVertical="true"
                 android:textColor="@color/button_text"
                 android:textSize="@dimen/_10sdp"
@@ -225,7 +230,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         android:layout_below="@id/row2"
         android:weightSum="1">
     <!--~~~~~~~~~~~~~~~~~~~~BLACKLIST~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -258,6 +263,7 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/lytImageView_blacklist"
             android:text="Industry Blacklisted Apps"
+            android:fontFamily="@font/biosans_light"
             android:layout_centerVertical="true"
             android:textColor="@color/button_text"
             android:textSize="@dimen/_10sdp"
@@ -295,6 +301,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/lytImageView_battery"
                 android:text="Battery Usage"
+                android:fontFamily="@font/biosans_light"
                 android:layout_centerVertical="true"
                 android:textColor="@color/button_text"
                 android:textSize="@dimen/_10sdp"
@@ -310,7 +317,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_7sdp"
+        android:layout_marginTop="@dimen/_4sdp"
         android:layout_below="@id/row3"
         android:weightSum="1">
     <!--~~~~~~~~~~~~~~~~~~~BACKGROUND~~~~~~~~~~~~~~~~~~~~~~~-->
@@ -343,6 +350,7 @@
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/lytImageView_background"
                 android:text="Background Running Apps"
+                android:fontFamily="@font/biosans_light"
                 android:layout_centerVertical="true"
                 android:textColor="@color/button_text"
                 android:textSize="@dimen/_10sdp"

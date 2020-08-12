@@ -21,6 +21,7 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -33,19 +34,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
 import com.example.apppermission.HomeActivity;
 import com.example.apppermission.R;
+import com.example.apppermission.categorybutton.CategoryActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -58,10 +64,12 @@ public class AppUsageStatisticsFragment extends Fragment {
     //VisibleForTesting for variables below
     UsageStatsManager mUsageStatsManager;
     UsageListAdapter mUsageListAdapter;
+    Spinner spinner;
     RecyclerView mRecyclerView;
     RecyclerView.LayoutManager mLayoutManager;
-    Button mOpenUsageSettingButton;
-    Spinner mSpinner;
+    TextView emptyList;
+    ImageView info;
+    double checkDays = 7.0;
 
     /**
      * Use this factory method to create a new instance of
@@ -98,10 +106,50 @@ public class AppUsageStatisticsFragment extends Fragment {
     public void onViewCreated(View rootView, Bundle savedInstanceState) {
         super.onViewCreated(rootView, savedInstanceState);
 
+        spinner = (Spinner) rootView.findViewById(R.id.timespan);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.timespans, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i == 0) {
+                    checkDays = 7.0;
+                }
+                if(i == 1) {
+                    checkDays = 1.0;
+                }
+                if(i == 2) {
+                    checkDays = 30.0;
+                }
+                if(i == 3) {
+                    checkDays = 0.0;
+                }
+                List<UsageStats> usageStatsList = getUsageStatistics(UsageStatsManager.INTERVAL_BEST);
+                Collections.sort(usageStatsList, new LastTimeLaunchedComparatorDesc());
+                updateAppsList(usageStatsList);
+            }
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
         //RecyclerView Creation
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview);
         mLayoutManager = mRecyclerView.getLayoutManager();
         mRecyclerView.scrollToPosition(0);
+
+        emptyList = (TextView) rootView.findViewById(R.id.noapps);
+
+        info = (ImageView) rootView.findViewById(R.id.unused_info);
+
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showUnusedAlertDialog();
+            }
+        });
 
         ImageView backArrow = rootView.findViewById(R.id.unused_backarrow);
 
@@ -113,35 +161,6 @@ public class AppUsageStatisticsFragment extends Fragment {
             }
         });
 
-        //Button for Access Settings
-        //mOpenUsageSettingButton = (Button) rootView.findViewById(R.id.button_open_usage_setting);
-/*
-        //Spinner Implementation
-        mSpinner = (Spinner) rootView.findViewById(R.id.spinner_time_span);
-        SpinnerAdapter spinnerAdapter = ArrayAdapter.createFromResource(getActivity(),
-                R.array.action_list, android.R.layout.simple_spinner_dropdown_item);
-        mSpinner.setAdapter(spinnerAdapter);
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            String[] strings = getResources().getStringArray(R.array.action_list);
-
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                StatsUsageInterval statsUsageInterval = StatsUsageInterval
-                        .getValue(strings[position]);
-                if (statsUsageInterval != null) {
- */
-                    List<UsageStats> usageStatsList = getUsageStatistics(UsageStatsManager.INTERVAL_DAILY);
-                    Collections.sort(usageStatsList, new LastTimeLaunchedComparatorDesc());
-                    updateAppsList(usageStatsList);
-                //}
-            //}
-/*
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-            }
-        });*/
     }
 
     /**
@@ -167,17 +186,6 @@ public class AppUsageStatisticsFragment extends Fragment {
 
         if (queryUsageStats.size() == 0) {
             showAlertDialog();
-           /* Log.i(TAG, "The user may not allow the access to apps usage. ");
-            Toast.makeText(getActivity(),
-                    getString(R.string.explanation_access_to_appusage_is_not_enabled),
-                    Toast.LENGTH_LONG).show();
-            mOpenUsageSettingButton.setVisibility(View.VISIBLE);
-            mOpenUsageSettingButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                }
-            });*/
         }
         return queryUsageStats;
     }
@@ -191,43 +199,69 @@ public class AppUsageStatisticsFragment extends Fragment {
     //VisibleForTesting
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     void updateAppsList(List<UsageStats> usageStatsList) {
-        List<CustomUsageStats> customUsageStatsList = new ArrayList<>();
-        long lastTimeUsed;
-        long current;
-        long diff;
-        long dayConvert;
-        for (int i = 0; i < usageStatsList.size(); i++) {
-            CustomUsageStats customUsageStats = new CustomUsageStats();
-            customUsageStats.usageStats = usageStatsList.get(i);
-            customUsageStats.packageName = usageStatsList.get(i).getPackageName();
-            for(int j = i + 1; j < usageStatsList.size(); j++) {
-                String getter = usageStatsList.get(j).getPackageName();
-                if (usageStatsList.get(i).getPackageName().equals(getter)) {
-                    usageStatsList.remove(j);
-                    j--;
+        try {
+            List<CustomUsageStats> customUsageStatsList = new ArrayList<>();
+            long lastTimeUsed;
+            long current;
+            long diff;
+            long dayConvert;
+            String thisPackage = getActivity().getPackageName();
+            Log.e("thisPackage", thisPackage);
+            for (int i = 0; i < usageStatsList.size(); i++) {
+                ApplicationInfo app = null;
+                try {
+                    app = getActivity().getPackageManager().getApplicationInfo(usageStatsList.get(i).getPackageName(), 0);
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
                 }
-            }
-            try {
-                Drawable appIcon = getActivity().getPackageManager()
-                        .getApplicationIcon(customUsageStats.usageStats.getPackageName());
-                customUsageStats.appIcon = appIcon;
-            } catch (PackageManager.NameNotFoundException e) {
-                Log.w(TAG, String.format("App Icon is not found for %s",
-                        customUsageStats.usageStats.getPackageName()));
-                customUsageStats.appIcon = getActivity()
-                        .getDrawable(R.drawable.ic_default_app_launcher);
-            }
-            lastTimeUsed = customUsageStats.usageStats.getLastTimeUsed();
-            current = System.currentTimeMillis();
-            dayConvert = (long) (1000 * 60 * 60 * 24);
-            diff = current - lastTimeUsed;
-            if (diff > (0.0 * dayConvert)) {
-                customUsageStatsList.add(customUsageStats);
-            }
+                if (app != null) {
+                    if (!isSystemPackage(app)) {
+                        CustomUsageStats customUsageStats = new CustomUsageStats();
+                        customUsageStats.usageStats = usageStatsList.get(i);
+                        customUsageStats.packageName = usageStatsList.get(i).getPackageName();
+                        for (int j = i + 1; j < usageStatsList.size(); j++) {
+                            String getter = usageStatsList.get(j).getPackageName();
+                            if (usageStatsList.get(i).getPackageName().equals(getter)) {
+                                usageStatsList.remove(j);
+                                j--;
+                            }
+                        }
+                        try {
+                            Drawable appIcon = getActivity().getPackageManager()
+                                    .getApplicationIcon(customUsageStats.usageStats.getPackageName());
+                            customUsageStats.appIcon = appIcon;
+                        } catch (PackageManager.NameNotFoundException e) {
+                            Log.w(TAG, String.format("App Icon is not found for %s",
+                                    customUsageStats.usageStats.getPackageName()));
+                            customUsageStats.appIcon = getActivity()
+                                    .getDrawable(R.drawable.ic_default_app_launcher);
+                        }
+                        lastTimeUsed = customUsageStats.usageStats.getLastTimeUsed();
+                        current = System.currentTimeMillis();
+                        dayConvert = (long) (1000 * 60 * 60 * 24);
+                        diff = current - lastTimeUsed;
+                        if (diff > (checkDays * dayConvert)) {
+                            if (!customUsageStats.packageName.equalsIgnoreCase(thisPackage)) {
+                                customUsageStatsList.add(customUsageStats);
+                            }
+                        }
+                    }
+                }
+                }
+
+                if (customUsageStatsList.size() > 0) {
+                    mUsageListAdapter = new UsageListAdapter(getContext(), customUsageStatsList);
+                    mRecyclerView.setAdapter(mUsageListAdapter);
+                    mRecyclerView.scrollToPosition(0);
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    emptyList.setVisibility(View.INVISIBLE);
+                } else {
+                    emptyList.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.INVISIBLE);
+                }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        mUsageListAdapter = new UsageListAdapter(getContext(), customUsageStatsList);
-        mRecyclerView.setAdapter(mUsageListAdapter);
-        mRecyclerView.scrollToPosition(0);
     }
 
     /**
@@ -295,6 +329,32 @@ public class AppUsageStatisticsFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     //no button functionality
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isSystemPackage(ApplicationInfo pkgInfo) {
+        return (pkgInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
+    }
+
+    private void showUnusedAlertDialog() {
+        try {
+            final Dialog dialog = new Dialog(getContext());
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.popup_unused_info);
+            dialog.setCancelable(true);
+            dialog.show();
+            Button yesBtn = (Button) dialog.findViewById(R.id.okBtn);
+            yesBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                     if (dialog.isShowing()) {
                         dialog.dismiss();
                     }

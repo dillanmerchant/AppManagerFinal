@@ -5,21 +5,27 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.apppermission.R;
+import com.example.apppermission.adsbutton.AdsActivity;
 import com.example.apppermission.categorybutton.database.DbHelper;
 import com.example.apppermission.categorybutton.database.DbModel;
 
@@ -40,6 +46,8 @@ public class CategoryActivity extends AppCompatActivity {
     ProgressDialog progressDialog;
     private DbHelper mDatabase;
     private CategoryAdapter categoryAdapter;
+    TextView emptyList;
+    ImageView info;
 
 
     @Override
@@ -68,20 +76,55 @@ public class CategoryActivity extends AppCompatActivity {
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
         mRecyclerView.setHasFixedSize(true);
 
+        emptyList = (TextView) findViewById(R.id.noapps);
+
+        info = (ImageView) findViewById(R.id.category_info);
+
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showCategoryAlertDialog();
+            }
+        });
+
+
         mDatabase = new DbHelper(CategoryActivity.this);
 
         categoryMenu.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    categoryString = categoryMenu.getSelectedItem().toString().toUpperCase();
-                    HashMap<String,String> map = getInstalledPackages();
-                    if(mDatabase.getAllApps().size() != map.size()){
-                        mDatabase.deleteAll();
-                        new FetchCategoryTask().execute();
-                    }
-                    else {
-                        populateView();
-                    }
+                categoryString = categoryMenu.getSelectedItem().toString().toUpperCase();
+                ArrayList<String> checkSize = new ArrayList<>();
+                HashMap<String,String> map = getInstalledPackages();
 
+                final String[] values = map.values().toArray(new String[map.size()]);
+                final String[] keys = map.keySet().toArray(new String[map.size()]);
+
+                String thisPackage = getPackageName();
+
+                for(int j=0;j<values.length;j++) {
+                    String packageName = keys[j];
+                    ApplicationInfo check = null;
+                    try {
+                        check = getPackageManager().getApplicationInfo(packageName, 0);
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    if (check != null) {
+                        if (!isSystemPackage(check)) {
+                            if (!packageName.equalsIgnoreCase(thisPackage)) {
+                                checkSize.add(packageName);
+                            }
+                        }
+                    }
+                }
+
+                if(mDatabase.getAllApps().size() != checkSize.size()){
+                    mDatabase.deleteAll();
+                    new FetchCategoryTask().execute();
+                }
+                else {
+                    populateView();
+                }
             }
             public void onNothingSelected(AdapterView<?> adapterView) {
 
@@ -93,7 +136,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         private final String TAG = FetchCategoryTask.class.getSimpleName();
         private PackageManager pm;
-        /*
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -102,7 +145,7 @@ public class CategoryActivity extends AppCompatActivity {
             progressDialog.show();
             progressDialog.setCancelable(false);
         }
-        */
+
         @Override
         protected Void doInBackground(Void... errors) {
             HashMap<String,String> map = getInstalledPackages();
@@ -110,21 +153,25 @@ public class CategoryActivity extends AppCompatActivity {
             final String[] values = map.values().toArray(new String[map.size()]);
             final String[] keys = map.keySet().toArray(new String[map.size()]);
 
+            String thisPackage = getPackageName();
+
             for(int i=0;i<values.length;i++) {
                 String packageName = keys[i];
-                String appCategoryType = parseAndExtractCategory(packageName);
-
-                mDatabase.insertData(packageName, appCategoryType);
-
-                /*
-                if(appCategoryType.equals(categoryString)) {
-                    categoryModelList.add(categoryModel);
+                ApplicationInfo check = null;
+                try {
+                    check = getPackageManager().getApplicationInfo(packageName, 0);
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
                 }
-                else if (categoryString.equals("ALL")) {
-                    categoryModelList.add(categoryModel);
-                }*/
+                if (check != null) {
+                    if (!isSystemPackage(check)) {
+                        String appCategoryType = parseAndExtractCategory(packageName);
+                        if (!packageName.equalsIgnoreCase(thisPackage)) {
+                            mDatabase.insertData(packageName, appCategoryType);
+                        }
+                    }
+                }
             }
-            populateView();
 
             return null;
         }
@@ -220,15 +267,13 @@ public class CategoryActivity extends AppCompatActivity {
             return appCategoryType;
         }
 
-        /*
         @Override
         protected void onPostExecute(Void aVoid) {
-            //super.onPostExecute(aVoid);
-            categoryAdapter = new CategoryAdapter(CategoryActivity.this, categoryModelList);
-            mRecyclerView.setAdapter(categoryAdapter);
-            //if(progressDialog.isShowing())
-            //progressDialog.dismiss();
-        }*/
+            super.onPostExecute(aVoid);
+            populateView();
+            if(progressDialog.isShowing())
+            progressDialog.dismiss();
+        }
     }
 
     public void populateView() {
@@ -242,8 +287,16 @@ public class CategoryActivity extends AppCompatActivity {
                 display = data;
             }
         }
-        categoryAdapter = new CategoryAdapter(CategoryActivity.this, display);
-        mRecyclerView.setAdapter(categoryAdapter);
+        if(display.size()>0) {
+            categoryAdapter = new CategoryAdapter(CategoryActivity.this, display);
+            mRecyclerView.setAdapter(categoryAdapter);
+            emptyList.setVisibility(View.INVISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
+        else {
+            emptyList.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.INVISIBLE);
+        }
     }
 
 
@@ -265,5 +318,31 @@ public class CategoryActivity extends AppCompatActivity {
             map.put(packageName,label);
         }
         return map;
+    }
+
+    private void showCategoryAlertDialog() {
+        try {
+            final Dialog dialog = new Dialog(CategoryActivity.this);
+            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            dialog.setContentView(R.layout.popup_category_info);
+            dialog.setCancelable(true);
+            dialog.show();
+            Button yesBtn = (Button) dialog.findViewById(R.id.okBtn);
+            yesBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (dialog.isShowing()) {
+                        dialog.dismiss();
+                    }
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private boolean isSystemPackage(ApplicationInfo pkgInfo) {
+        return (pkgInfo.flags & ApplicationInfo.FLAG_SYSTEM) != 0;
     }
 }

@@ -31,6 +31,7 @@
                 android:gravity="center"
                 android:layout_below="@+id/logoImage"
                 android:text="Usage Access"
+                android:fontFamily="@font/biosans_regular"
                 android:textSize="@dimen/_13sdp"/>
             <View
                 android:layout_width="@dimen/_100sdp"
@@ -54,6 +55,7 @@
                 android:layout_marginLeft="@dimen/_15sdp"
                 android:textSize="@dimen/_15sdp"
                 android:text="@string/usage_access"
+                android:fontFamily="@font/biosans_light"
                 android:layout_marginRight="@dimen/_15sdp"
                 android:textColor="@color/dark_black"
                 android:gravity="center"
@@ -68,6 +70,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:text="OK"
+                    android:fontFamily="@font/biosans_light"
                     android:layout_weight="1"
                     android:layout_gravity="center"
                     android:id="@+id/okBtn"
@@ -82,6 +85,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:text="Cancel"
+                    android:fontFamily="@font/biosans_light"
                     android:layout_gravity="center"
                     android:id="@+id/cancelBtn"
                     android:layout_weight="1"

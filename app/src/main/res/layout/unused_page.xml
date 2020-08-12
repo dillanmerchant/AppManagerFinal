@@ -33,8 +33,35 @@ tools:context=".unusedbutton.UnusedActivity">
         android:gravity="center"
         android:text="Unused Apps"
         android:textSize="@dimen/_18sdp"/>
+    <ImageView
+        android:id="@+id/unused_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_info"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/_10sdp" />
 
 </RelativeLayout>
+    <TextView
+        android:id="@+id/spinnerLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Time Span:"
+        android:fontFamily="@font/biosans_light"
+        android:layout_alignBottom="@+id/bgImageView"
+        android:layout_marginLeft="@dimen/_18sdp"
+        android:textSize="@dimen/_13sdp"/>
+    <Spinner
+        android:id="@+id/timespan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/spinner_category"
+        android:layout_alignBottom="@+id/bgImageView"
+        android:layout_toRightOf="@id/spinnerLabel"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:fontFamily="@font/biosans_light"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -45,7 +72,6 @@ tools:context=".unusedbutton.UnusedActivity">
         android:padding="@dimen/margin_medium"
         android:layout_below="@id/bgImageView"
         >
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             android:layout_marginLeft="@dimen/margin_small"
@@ -56,8 +82,21 @@ tools:context=".unusedbutton.UnusedActivity">
             android:layout_height="match_parent"
             app:layoutManager="LinearLayoutManager"
             />
-
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/noapps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_list"
+        android:layout_below="@id/bgImageView"
+        android:textSize="@dimen/_18sdp"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/_25sdp"
+        android:layout_marginRight="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_100sdp"
+        android:textColor="#D3D3D3"
+        android:visibility="gone"/>
 
 </RelativeLayout>
 

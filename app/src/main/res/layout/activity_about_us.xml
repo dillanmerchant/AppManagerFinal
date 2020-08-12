@@ -31,6 +31,7 @@
             android:textColor="#fff"
             android:gravity="center"
             android:text="About Us"
+            android:fontFamily="@font/biosans_light"
             android:textSize="@dimen/_18sdp"/>
 
     </RelativeLayout>
@@ -47,6 +48,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
+        android:fontFamily="@font/biosans_regular"
         android:textSize="@dimen/_20sdp"
         android:layout_below="@id/logo_top"
         android:layout_centerHorizontal="true"
@@ -57,6 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/version"
+        android:fontFamily="@font/biosans_light"
         android:textSize="@dimen/_10sdp"
         android:layout_below="@id/apptitle"
         android:layout_centerHorizontal="true"/>
@@ -66,6 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/about_us_version"
+        android:fontFamily="@font/biosans_regular"
         android:textSize="@dimen/_14sdp"
         android:layout_below="@id/version_number"
         android:layout_marginLeft="@dimen/_10sdp"
@@ -77,6 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/about_us_paragrpah"
+        android:fontFamily="@font/biosans_regular"
         android:textSize="@dimen/_14sdp"
         android:layout_below="@id/version_paragraph"
         android:layout_marginLeft="@dimen/_10sdp"

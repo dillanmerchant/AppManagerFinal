@@ -31,7 +31,17 @@
             android:textColor="#fff"
             android:gravity="center"
             android:text="Industry Blacklisted Apps"
+            android:fontFamily="@font/biosans_light"
             android:textSize="@dimen/_18sdp"/>
+        <ImageView
+            android:id="@+id/blacklist_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_info"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/_10sdp" />
 
     </RelativeLayout>
 
@@ -42,5 +52,20 @@
         android:layout_below="@+id/bgImageView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/noapps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_list"
+        android:fontFamily="@font/biosans_light"
+        android:layout_below="@id/bgImageView"
+        android:textSize="@dimen/_18sdp"
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/_25sdp"
+        android:layout_marginRight="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_100sdp"
+        android:textColor="#D3D3D3"
+        android:visibility="gone"/>
 
 </RelativeLayout>

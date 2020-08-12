@@ -13,6 +13,19 @@
     <string name="about_us_paragrpah">AppManager app and Logo are the trademarks of SoftClouds LLC All rights reserved</string>
     <string name="about_us_version">Version: 1.0.1.1 dated August 10, 2020.</string>
     <string name="battery_usage">You will be Navigated to Battery Usage Details in Device Settings</string>
+    <string name="empty_list">No Apps Meet the Requirements for this List</string>
+    <string name="ads_info">The apps in this list are ones that contain ads. If you prefer apps that do not contain ads, click the red minus to delete the application</string>
+    <string name="data_info">The apps in this list all have access to permission that collect your personal data. Click the info button next each app to see exactly which permissions are being used. If you prefer an app does not collect the specified permissions, click the red minus to delete the application</string>
+    <string name="category_info">Choose an option on the dropdown menu to show all apps under that category. If you prefer not to have apps under that category, click the red minus to delete the application</string>
+    <string name="unused_info">Choose an option on the dropdown menu to show all apps that have not been used in that time frame. Displayed under the app name is that last time used. If you find that you are not using this app anymore, click the red minus to delete the application</string>
+    <string name="blacklist_info">The apps in this list are considered blacklisted due to known security concerns. If you prefer not to have these industry blacklisted apps on your device, click the the red minus to delete the application</string>
+    <string name="battery_info"></string>
+    <string-array name="timespans">
+        <item>Weekly</item>
+        <item>Daily</item>
+        <item>Monthly</item>
+        <item>None</item>
+    </string-array>
     <string-array name="category_array">
         <item>All</item>
         <item>Art &amp; Design</item>

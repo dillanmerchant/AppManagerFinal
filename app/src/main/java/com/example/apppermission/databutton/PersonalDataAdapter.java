@@ -74,7 +74,7 @@ public class PersonalDataAdapter extends RecyclerView.Adapter<PersonalDataAdapte
                 String response_new= list.get(position).getPackageName();
                 Intent intent = new Intent(Intent.ACTION_DELETE);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setData(Uri.parse("package:" + list.get(position)));
+                intent.setData(Uri.parse("package:" + list.get(position).getPackageName()));
 
                 updateAdapter(list);
                 ctx.startActivity(intent);

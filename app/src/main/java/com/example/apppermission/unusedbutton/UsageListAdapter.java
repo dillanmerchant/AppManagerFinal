@@ -90,7 +90,7 @@ public class UsageListAdapter extends RecyclerView.Adapter<UsageListAdapter.View
                 String response_new = list.get(position).packageName;
                 Intent intent = new Intent(Intent.ACTION_DELETE);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.setData(Uri.parse("package:" + list.get(position)));
+                intent.setData(Uri.parse("package:" + list.get(position).packageName));
 
                 updateAdapter(list);
                 ctx.startActivity(intent);
