@@ -10,8 +10,12 @@
     </string>
     <string name="usage_access">Please add AppManager to Apps with Usage Access in Settings / Security</string>
     <string name="background_running">You will be Navigated to Background Running Services in Device Settings</string>
-    <string name="about_us_paragrpah">AppManager app and Logo are the trademarks of SoftClouds LLC All rights reserved</string>
-    <string name="about_us_version">Version: 1.0.1.1 dated August 10, 2020.</string>
+    <string name="about_us_paragraph">AppManager app and Logo are the trademarks of SoftClouds LLC All rights reserved</string>
+    <string name="softcloud_link">
+        <a href="https://www.softclouds.com/">SoftClouds LLC</a>
+    </string>
+    <string name="rights">All rights reserved</string>
+    <string name="about_us_version">Version: 1.0.1.1 dated August 10, 2020. <a href="https://www.softclouds.com/">SoftClouds LLC</a></string>
     <string name="battery_usage">You will be Navigated to Battery Usage Details in Device Settings</string>
     <string name="empty_list">No Apps Meet the Requirements for this List</string>
     <string name="ads_info">The apps in this list are ones that contain ads. If you prefer apps that do not contain ads, click the red minus to delete the application</string>
@@ -60,7 +64,7 @@
         <item>Sports</item>
         <item>Tools</item>
         <item>Travel &amp; Local</item>
-        <item>Video Players &amp; Editors</item>
+        <item>Video Players</item>
         <item>Weather</item>
         <item>Others</item>
     </string-array>

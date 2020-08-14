@@ -54,7 +54,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_10sdp"/>
 
-    <TextView
+    <!--<TextView
         android:id="@+id/version_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -62,9 +62,9 @@
         android:fontFamily="@font/biosans_light"
         android:textSize="@dimen/_10sdp"
         android:layout_below="@id/apptitle"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"/>-->
 
-    <TextView
+    <!--<TextView
         android:id="@+id/version_paragraph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -74,18 +74,24 @@
         android:layout_below="@id/version_number"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_20sdp"/>
+        android:layout_marginTop="@dimen/_20sdp"/>-->
 
-    <TextView
+    <!--<TextView
         android:id="@+id/about_paragraph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/about_us_paragrpah"
         android:fontFamily="@font/biosans_regular"
         android:textSize="@dimen/_14sdp"
         android:layout_below="@id/version_paragraph"
         android:layout_marginLeft="@dimen/_10sdp"
         android:layout_marginRight="@dimen/_10sdp"
-        android:layout_marginTop="@dimen/_5sdp"/>
+        android:layout_marginTop="@dimen/_5sdp"/>-->
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/softcloud_links"
+        android:layout_below="@id/apptitle"
+        android:layout_marginTop="@dimen/_10sdp"/>
 
 </RelativeLayout>
