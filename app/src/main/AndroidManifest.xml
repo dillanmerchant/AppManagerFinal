@@ -7,15 +7,18 @@
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_icon"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_icon"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".AboutUsActivity"></activity>
+        android:theme="@style/AppTheme"
+        tools:targetApi="n">
+        <activity android:name=".AboutUsActivity" />
         <activity android:name=".SettingsActivity" />
         <activity android:name=".BatteryActivity" />
         <activity android:name=".adsbutton.AdsActivity" />
@@ -31,6 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name=".utils.MainService"
             android:enabled="true" />

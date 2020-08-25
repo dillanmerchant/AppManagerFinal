@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:textColor="#fff"
             android:gravity="center"
-            android:text="About Us"
+            android:text="About Me"
             android:fontFamily="@font/biosans_light"
             android:textSize="@dimen/_18sdp"/>
 

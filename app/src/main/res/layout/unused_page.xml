@@ -31,6 +31,7 @@ tools:context=".unusedbutton.UnusedActivity">
         android:layout_height="wrap_content"
         android:textColor="#fff"
         android:gravity="center"
+        android:fontFamily="@font/biosans_light"
         android:text="Unused Apps"
         android:textSize="@dimen/_18sdp"/>
     <ImageView
