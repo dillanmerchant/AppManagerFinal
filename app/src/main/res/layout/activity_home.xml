@@ -359,13 +359,51 @@
                 />
         </RelativeLayout>
 
-        <TextView
+        <RelativeLayout
+            android:id="@+id/sideloadButton"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_75sdp"
+            android:layout_weight="0.5"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_2sdp"
+            android:background="@drawable/button">
+            <RelativeLayout
+                android:layout_width="@dimen/_50sdp"
+                android:layout_margin="@dimen/_7sdp"
+                android:id="@+id/lytImageView_sideload"
+                android:layout_height="@dimen/_50sdp"
+                android:background="@drawable/button_icon"
+                android:layout_centerVertical="true">
+                <ImageView
+                    android:id="@+id/icon_sideload"
+                    android:src="@drawable/ic_background_running_apps"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/_1sdp"
+                    android:layout_marginTop="@dimen/_1sdp"
+                    android:layout_height="@dimen/_30sdp" />
+            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/lytImageView_sideload"
+                android:text="Sideloaded Apps"
+                android:fontFamily="@font/biosans_light"
+                android:layout_centerVertical="true"
+                android:textColor="@color/button_text"
+                android:textSize="@dimen/_10sdp"
+                android:layout_marginLeft="@dimen/_3sdp"
+                android:layout_marginRight="@dimen/_3sdp"
+                />
+        </RelativeLayout>
+
+        <!--<TextView
             android:id="@+id/temp"
             android:layout_width="0dp"
             android:layout_height="@dimen/_75sdp"
             android:layout_weight="0.5"
             android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_2sdp"/>
+            android:layout_marginRight="@dimen/_2sdp"/>-->
 
     </LinearLayout>
 

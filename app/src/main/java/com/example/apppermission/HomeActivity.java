@@ -59,6 +59,7 @@ public class HomeActivity extends AppCompatActivity {
         RelativeLayout blacklistApps = (RelativeLayout) findViewById(R.id.blacklistButton);
         RelativeLayout categoryApps = (RelativeLayout) findViewById(R.id.categoryButton);
         RelativeLayout adsApps = (RelativeLayout) findViewById(R.id.containAdsButton);
+        RelativeLayout sideloadApps = (RelativeLayout) findViewById(R.id.sideloadButton);
         ImageView settings = (ImageView) findViewById(R.id.settings_button);
 
         if(!hasPermission(HomeActivity.this)){
@@ -140,6 +141,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        sideloadApps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(HomeActivity.this, SideloadActivity.class);
+                startActivity(intent);
+            }
+        });
+
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,6 +156,8 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
 
 
         if (!isMyServiceRunning()) {
